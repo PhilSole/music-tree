@@ -47,34 +47,101 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tone.js stuff
     // ===========================================================================
 
-    const rootNote = document.getElementById('rootNote');
-    const harmonic_1_5 = document.getElementById('harmonic_1_5');
+    // Just handle enabling the audio context so browsers don't get upset
+    let btnEnableAudio = document.querySelector('.btn-enable-audio');
+    const context = Tone.getContext();
 
+    if(context.state == 'running') {
+        btnEnableAudio.style.display = "none";
+    } else {
+        btnEnableAudio.addEventListener('click', async () => {
+            await Tone.start();
+            console.log("audio is ready");
+            btnEnableAudio.style.display = "none";
+        });         
+    }
+
+
+    // Logic variables
     let rootFrequency = 83;
 
-    // Create a synth and connect it to the speakers
-    const synth = new Tone.Synth().toDestination();
-    const delay = new Tone.FeedbackDelay('8n', 0.5).toDestination();
-    // synth.connect(delay);
-
+    // Create a PolySynth with 10 voices
     const polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
 
-    const transport = Tone.getTransport();
+    const distortion = new Tone.Distortion(0.9).toDestination();
+    // const filter = new Tone.Filter(400, "lowpass").toDestination();
+    // const feedbackDelay = new Tone.FeedbackDelay(0.125, 0.5).toDestination();
 
-    rootNote.addEventListener('mousedown', triggerSound);
-    rootNote.addEventListener('touchstart', (event) => {
-        event.preventDefault(); // Prevents touch-specific actions like scrolling
-        triggerSound();
+
+    // polySynth.connect(distortion);
+    // polySynth.connect(filter);
+    // polySynth.connect(feedbackDelay);
+
+    // Function to play a note
+    function playNoteFrequency(multiplier, button) {
+        const frequency = rootFrequency * multiplier;
+
+        console.log(`Playing note: ${frequency} Hz`);
+
+        // Trigger the note using PolySynth
+        polySynth.triggerRelease(frequency);
+        polySynth.triggerAttack(frequency);
+        button.dataset.frequency = frequency;  // Store the frequency in the button element
+
+        // Visual feedback (optional)
+        button.classList.add('active');
+    }
+
+    // Function to stop playing the note
+    function stopNoteFrequency(button) {
+        const frequency = button.dataset.frequency;
+        // Stop the note using PolySynth
+        if (frequency) {
+            console.log(`Stopping note: ${frequency} Hz`);
+            polySynth.triggerRelease(Number(frequency));
+            button.classList.remove('active');
+        }
+    }
+
+
+    // Add event listeners to all buttons
+    document.querySelectorAll('.btn-note').forEach(button => {
+        const noteMultiplier = Number(button.dataset.note);
+
+        // Handle mousedown and touchstart
+        button.addEventListener('mousedown', () => playNoteFrequency(noteMultiplier, button));
+        button.addEventListener('touchstart', () => playNoteFrequency(noteMultiplier, button));
+
+        // Handle mouseup and touchend
+        button.addEventListener('mouseup', () => stopNoteFrequency(button));
+        button.addEventListener('touchend', () => stopNoteFrequency(button));
+
+        // Handle mouseleave to stop the note if the mouse leaves the button while holding
+        button.addEventListener('mouseleave', () => stopNoteFrequency(button));
     });
 
-    function triggerSound() {
-        // synth.triggerAttackRelease(rootFrequency, '1n');
 
-        polySynth.triggerAttackRelease([rootFrequency, rootFrequency*1.25, rootFrequency*1.5], '2n');
 
-        // Optionally, start the transport if using sequences
-        if (!transport.state === 'started') {
-            transport.start();
-        }        
-    }
+    // Handle keydown and keyup for keyboard control
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'f') {
+            const button = document.querySelector('.btn-note[data-note="1"]');
+            playNoteFrequency(Number(button.dataset.note), button);
+        }
+        if (event.key === 'g') {
+            const button = document.querySelector('.btn-note[data-note="1.5"]');
+            playNoteFrequency(Number(button.dataset.note), button);
+        }
+    });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'f') {
+            const button = document.querySelector('.btn-note[data-note="1"]');
+            stopNoteFrequency(button);
+        }
+        if (event.key === 'g') {
+            const button = document.querySelector('.btn-note[data-note="1.5"]');
+            stopNoteFrequency(button);
+        }
+    });
 });

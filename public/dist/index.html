@@ -5,19 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatGPT with Tone.js</title>
     <!-- Parcel will compile SCSS to CSS -->
-    <link rel="stylesheet" href="/index.c75b3974.css">
+    <link rel="stylesheet" href="/index.984555ee.css">
 </head>
 <body>
     <textarea id="user-input" placeholder="Type your prompt here..."></textarea>
     <button id="submit-button">Send</button>
     <div id="output"></div>
 
+    <button class="btn-enable-audio">Enable Audio</button>
+
     <div class="music-tree-interface">
-        <button id="rootNote"><span class="hertz">83</span>Hz</button>
-        <button id="harmonic_1_5">125Hz</button>
+        <button id="rootNote" class="btn-note" data-note="1"><span class="ratio">1</span></button>
+        <button class="btn-note" data-note="1.5"><span class="ratio">1.5</span></button>
+        <button class="btn-note" data-note="1.25"><span class="ratio">1.25</span></button>
+        <button class="btn-note" data-note="2.25"><span class="ratio">2.25</span></button>
+        <button class="btn-note" data-note=".666"><span class="ratio">.666</span></button>
+        <button class="btn-note" data-note="1.2"><span class="ratio">1.2</span></button>
+        <button class="btn-note" data-note=".833"><span class="ratio">.833</span></button>
+        <button class="btn-note" data-note="1.875"><span class="ratio">1.875</span></button>
+        <button class="btn-note" data-note="1.8"><span class="ratio">1.8</span></button>
+        <button class="btn-note" data-note=".8"><span class="ratio">.8</span></button>
+
+        <button class="btn-note" data-note="1.4"><span class="ratio">1.4</span></button>
+        <button class="btn-note" data-note="1.6"><span class="ratio">1.6</span></button>
+        <button class="btn-note" data-note="1.75"><span class="ratio">1.75</span></button>
+        <button class="btn-note" data-note="1.333"><span class="ratio">1.333</span></button>
+
+        <button class="btn-note" data-note="2"><span class="ratio">2</span></button>
+        <button class="btn-note" data-note="1.042"><span class="ratio">1.042</span></button>
+        <button class="btn-note" data-note="1.666"><span class="ratio">1.666</span></button>
+        <button class="btn-note" data-note=".96"><span class="ratio">.96</span></button>
+        <button class="btn-note" data-note="1.125"><span class="ratio">1.125</span></button>
     </div>
 
+    <p>1.4 and 1.6 create a pinch</p>
+
     <!-- Parcel will bundle and transpile JS -->
-    <script src="/index.5322d1d4.js" defer=""></script>
+    <script src="/index.549f3370.js" defer=""></script>
 </body>
 </html>
