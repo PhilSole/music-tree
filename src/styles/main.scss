@@ -9,6 +9,8 @@ $color_relation_3: #f0a1ef;
 $color_relation_4: #A2C8BC;
 $color_relation_5: #C8BDA1;
 $color_relation_6: #E9A7B4;
+$color_relation_7: #d7bcbf;
+$color_relation_8: #bfb1a5;
 
 
 .btn-enable-audio {
@@ -87,6 +89,16 @@ $color_relation_6: #E9A7B4;
     &.relation_6 {
         background-color: $color_relation_6;
     }
+
+    &.relation_7 {
+        background-color: $color_relation_7;
+    }
+
+    &.relation_8 {
+        background-color: $color_relation_8;
+    }
+
+
 
     &[data-note="1"] {
         left: 50%;
