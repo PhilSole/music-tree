@@ -66,7 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let rootFrequency = 83;
 
     // Create a PolySynth with 10 voices
-    const polySynth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const polySynth = new Tone.PolySynth(Tone.Synth, {
+        envelope: {
+            attack: 0.01,  // Time it takes for the sound to reach its peak level
+            decay: 0.2,    // Time it takes for the sound to decay down to the sustain level
+            sustain: 0.5,  // Sustain level (0 to 1)
+            release: 2     // Time it takes for the sound to fade out after releasing the note
+        }
+    }).toDestination();
 
     const distortion = new Tone.Distortion(0.9).toDestination();
     // const filter = new Tone.Filter(400, "lowpass").toDestination();
