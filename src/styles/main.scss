@@ -2,10 +2,13 @@ $color_default: #4b4b4b;
 $color_root: #a2efa1;
 $color_harmonic_1: #f0a1a1;
 $color_harmonic_2: #f0efa1;
-$color_harmonic_3: #f0ada8;
+$color_harmonic_3: #F0C8A1;
 $color_relation_1: #a2a1ef;
 $color_relation_2: #a2efef;
 $color_relation_3: #f0a1ef;
+$color_relation_4: #A2C8BC;
+$color_relation_5: #C8BDA1;
+$color_relation_6: #E9A7B4;
 
 
 .btn-enable-audio {
@@ -71,6 +74,18 @@ $color_relation_3: #f0a1ef;
 
     &.relation_3 {
         background-color: $color_relation_3;
+    }
+
+    &.relation_4 {
+        background-color: $color_relation_4;
+    }
+
+    &.relation_5 {
+        background-color: $color_relation_5;
+    }
+
+    &.relation_6 {
+        background-color: $color_relation_6;
     }
 
     &[data-note="1"] {
