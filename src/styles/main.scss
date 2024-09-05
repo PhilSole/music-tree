@@ -1,4 +1,5 @@
 $color_default: #4b4b4b;
+
 // $color_root: #a2efa1;
 // $color_harmonic_1: #f0a1a1;
 // $color_harmonic_2: #f0efa1;
@@ -26,17 +27,21 @@ $color_relation_7: #d7bcbf;
 $color_relation_8: #00FFFF;
 
 $color_root: #ff00ff;
-$color_harmonic_1: #ffff00;
-$color_harmonic_2: #ff0000;
-$color_harmonic_3: #ff7f00;
-$color_relation_1: #00FFFF;
-$color_relation_2: #0000ff;
-$color_relation_3: #00ff00;
-$color_relation_4: #800020;
-$color_relation_5: #452350;
-$color_relation_6: #E9A7B4;
-$color_relation_7: #d7bcbf;
-$color_relation_8: #7F00FF;
+$color_harmonic_1: rgba(#ffff00, 0.75);
+$color_harmonic_2: rgba(#13ffff, 0.5);
+$color_harmonic_3: #858585;
+$color_relation_1: #00ff00;
+$color_relation_2: #858585;
+$color_relation_3: #858585;
+$color_relation_4: #858585;
+$color_relation_5: #858585;
+$color_relation_6: #858585;
+$color_relation_7: #858585;
+$color_relation_8: #858585;
+
+.colour-wheel {
+    transform: scaleX(-1) rotate(-120deg);
+}
 
 .btn-enable-audio {
     position: absolute;
@@ -65,7 +70,7 @@ $color_relation_8: #7F00FF;
     font-size: .875rem;
     font-weight: 600;
     color: #fff;
-    text-shadow: 0 0 3px rgba(0,0,0,.2);
+    // text-shadow: 0 0 12px rgba(0,0,0,1);
     background-color: $color_default;
     border: none;
     cursor: pointer;
