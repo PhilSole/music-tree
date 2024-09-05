@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "parcel watch src/index.html --dist-dir public/dist --no-hmr",
     "build": "parcel build src/index.html --dist-dir public/dist",
-    "start-prod": "node server/index.js",
-    "start-dev": "set NODE_ENV=development&&nodemon server/index.js"
+    "prod-server": "node server/index.js",
+    "dev-server": "set NODE_ENV=development&&nodemon server/index.js"
   },
   "author": "Philip Sole (philipsole.com)",
   "license": "ISC",

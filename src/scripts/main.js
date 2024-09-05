@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Logic variables
-    let rootFrequency = 83;
+    let rootFrequency = 166;
 
     // Create a PolySynth with 10 voices
     const polySynth = new Tone.PolySynth(Tone.Synth, {
