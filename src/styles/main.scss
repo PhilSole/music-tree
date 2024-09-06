@@ -1,46 +1,8 @@
-$color_default: #4b4b4b;
-
-// $color_root: #a2efa1;
-// $color_harmonic_1: #f0a1a1;
-// $color_harmonic_2: #f0efa1;
-// $color_harmonic_3: #F0C8A1;
-// $color_relation_1: #a2a1ef;
-// $color_relation_2: #a2efef;
-// $color_relation_3: #f0a1ef;
-// $color_relation_4: #A2C8BC;
-// $color_relation_5: #C8BDA1;
-// $color_relation_6: #E9A7B4;
-// $color_relation_7: #d7bcbf;
-// $color_relation_8: #bfb1a5;
-
-$color_root: #ff0000;
-$color_harmonic_1: #0000ff;
-$color_harmonic_2: #ffff00;
-$color_harmonic_3: #ff7f00;
-$color_relation_1: #00ff00;
-$color_relation_2: #7F00FF;
-$color_relation_3: #ff00ff;
-$color_relation_4: #800020;
-$color_relation_5: #452350;
-$color_relation_6: #E9A7B4;
-$color_relation_7: #d7bcbf;
-$color_relation_8: #00FFFF;
-
-$color_root: #ff00ff;
-$color_harmonic_1: rgba(#ffff00, 0.75);
-$color_harmonic_2: rgba(#13ffff, 0.5);
-$color_harmonic_3: #858585;
-$color_relation_1: #00ff00;
-$color_relation_2: #858585;
-$color_relation_3: #858585;
-$color_relation_4: #858585;
-$color_relation_5: #858585;
-$color_relation_6: #858585;
-$color_relation_7: #858585;
-$color_relation_8: #858585;
+$color_default: #5c5c5c;
 
 .colour-wheel {
     transform: scaleX(-1) rotate(-120deg);
+    opacity: .1;
 }
 
 .btn-enable-audio {
@@ -54,8 +16,8 @@ $color_relation_8: #858585;
 }
 
 .music-tree-interface {
-    width: 340px;
-    height: 640px;
+    width: 374px;
+    height: 704px;
     // border: 1px solid;
     position: absolute;
     margin: 30px auto;
@@ -66,7 +28,7 @@ $color_relation_8: #858585;
 .btn-note {
     width: 90px;
     height: 90px;
-    border-radius: 60px;
+    border-radius: 200px;
     font-size: .875rem;
     font-weight: 600;
     color: #fff;
@@ -82,78 +44,32 @@ $color_relation_8: #858585;
         opacity: .8;
     }
 
-    &.root {
-        background-color: $color_root;
-    }
-
-    &.harmonic_1 {
-        background-color: $color_harmonic_1;
-    }
-
-    &.harmonic_2 {
-        background-color: $color_harmonic_2;
-    }
-
-    &.harmonic_3 {
-        background-color: $color_harmonic_3;
-    }
-
-    &.relation_1 {
-        background-color: $color_relation_1;
-    }
-
-    &.relation_2 {
-        background-color: $color_relation_2;
-    }
-
-    &.relation_3 {
-        background-color: $color_relation_3;
-    }
-
-    &.relation_4 {
-        background-color: $color_relation_4;
-    }
-
-    &.relation_5 {
-        background-color: $color_relation_5;
-    }
-
-    &.relation_6 {
-        background-color: $color_relation_6;
-    }
-
-    &.relation_7 {
-        background-color: $color_relation_7;
-    }
-
-    &.relation_8 {
-        background-color: $color_relation_8;
-    }
-
-
-
     &[data-note="1"] {
         left: 50%;
         top: 50%;
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
     }
 
     &[data-note="1.5"] {
         left: 50%;
         top: 25%;
+        width: 67px;
+        height: 67px;
     }
 
     &[data-note="1.25"] {
         left: 91%;
         top: 37.5%;
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
     }
 
     &[data-note=".666"] {
         left: 50%;
         top: 75%;
+        width: 150px;
+        height: 150px;
     }    
 
     &[data-note="2.25"] {
@@ -168,7 +84,16 @@ $color_relation_8: #858585;
         top: 37.5%;
         width: 45px;
         height: 45px;
+        transform: translate(-17%, -50%);
     }
+
+    &[data-note="1.167"] {
+        left: 9%;
+        top: 37.5%;
+        width: 45px;
+        height: 45px;
+        transform: translate(-67%, -50%);
+    }    
 
     &[data-note=".833"] {
         left: 91%;
@@ -189,7 +114,7 @@ $color_relation_8: #858585;
         top: 12.5%;
         width: 45px;
         height: 45px;
-        // transform: translate(0, -50%);
+        transform: translate(-17%, -50%);
     }
 
     &[data-note="1.75"] {
@@ -197,7 +122,7 @@ $color_relation_8: #858585;
         top: 12.5%;
         width: 45px;
         height: 45px;
-        // transform: translate(-100%, -50%);
+        transform: translate(-67%, -50%);
     }    
 
     &[data-note=".8"] {
@@ -294,8 +219,8 @@ $color_relation_8: #858585;
     &[data-note=".5"] {
         left: -73%;
         top: 87.5%;
-        width: 90px;
-        height: 90px;
+        width: 200px;
+        height: 200px;
     } 
 
     &[data-note=".694"] {
@@ -329,7 +254,8 @@ $color_relation_8: #858585;
     &[data-note=".444"] {
         left: 50%;
         top: 100%;
-        width: 60px;
-        height: 60px;
+        width: 225px;
+        height: 225px;
+        // display: none;
     }   
 }
