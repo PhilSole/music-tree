@@ -1,14 +1,7 @@
 import * as Tone from 'tone';
+import noteConfig from './config-note.js';
 
-// construct.js
 export function constructMusicTree() {
-    console.log('Constructing something...');
-
-    // Some things to try to increase tone.js performance
-    Tone.getContext().latencyHint = 'fastest'; // Or 'balanced', 'playback'
-    // Tone.context = new AudioContext({ latencyHint: 'interactive', sampleRate: 44100 });
-    // console.log(Tone.getContext().baseLatency); // Monitor CPU load
-    // Share effects between notes
 
     let rootFrequency = 166;
 
@@ -22,7 +15,9 @@ export function constructMusicTree() {
     }).toDestination();
 
 
-    
+    noteConfig.forEach(note => {
+        console.log(note.note);
+    })
 
 
     let keyMap = {
