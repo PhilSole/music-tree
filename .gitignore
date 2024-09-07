@@ -19,6 +19,6 @@ Thumbs.db
 
 # Optional: ignore build artifacts (if you're using a build process)
 dist/
-# build/
+build/
 
 .parcel-cache/
