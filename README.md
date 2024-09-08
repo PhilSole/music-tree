@@ -1,4 +1,5 @@
 # Music Tree
+- "Javascript is the hidden world of the web". What the hell does that mean?
 
 ## Project Notes
 - 1.4 and 1.6 create a pinch
@@ -9,6 +10,7 @@
 - JS use event delegation
 - interesting idea of graph with nodes and edges. The edges could describe relationships
 - positioning is based on 3 directions, positive and negative. 5th, Maj 3rd, Min 3rd. Could be part of button config file.
+- Dividing by 5 is the largeest meaningful division
 
 ## Tone.js notes
 - Some things to try to increase tone.js performance

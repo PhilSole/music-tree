@@ -1,5 +1,7 @@
 $color_default: #5c5c5c;
 
+
+
 .colour-wheel {
     transform: scaleX(-1) rotate(-120deg);
     opacity: .1;
@@ -42,6 +44,10 @@ $color_default: #5c5c5c;
 
     &.active {
         opacity: .8;
+    }
+
+    &.done {
+        background-color: magenta;
     }
 
     &[data-note="1"] {
@@ -92,7 +98,7 @@ $color_default: #5c5c5c;
         top: 37.5%;
         width: 45px;
         height: 45px;
-        transform: translate(0, -50%);
+        // transform: translate(0, -50%);
     }    
 
     &[data-note=".833"] {
@@ -122,7 +128,7 @@ $color_default: #5c5c5c;
         top: 12.5%;
         width: 45px;
         height: 45px;
-        transform: translate(0, -50%);
+        // transform: translate(0, -50%);
     }    
 
     &[data-note=".8"] {
@@ -160,7 +166,7 @@ $color_default: #5c5c5c;
         height: 90px;
     }
 
-    &[data-note="1.042"] {
+    &[data-note="1.067"] {
         left: 132%;
         top: 50%;
         width: 45px;
@@ -187,7 +193,7 @@ $color_default: #5c5c5c;
         top: 50%;
         width: 45px;
         height: 45px;
-        transform: translate(-100%, -50%);
+        // transform: translate(-100%, -50%);
     }
 
     &[data-note="1.4"] {
@@ -211,7 +217,7 @@ $color_default: #5c5c5c;
         height: 45px;
     }   
     
-    &[data-note=".875"] {
+    &[data-note=".888"] {
         left: 173%;
         top: 62.5%;
         width: 45px;
@@ -232,7 +238,7 @@ $color_default: #5c5c5c;
         height: 200px;
     } 
 
-    &[data-note=".694"] {
+    &[data-note=".7"] {
         left: 132%;
         top: 75%;
         width: 45px;
@@ -246,7 +252,7 @@ $color_default: #5c5c5c;
         height: 45px;
     } 
 
-    &[data-note=".521"] {
+    &[data-note=".533"] {
         left: 9%;
         top: 87.5%;
         width: 45px;

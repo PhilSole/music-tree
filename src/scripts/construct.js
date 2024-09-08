@@ -3,6 +3,9 @@ import noteConfig from './config-note.js';
 
 export function constructMusicTree() {
 
+    let musicTree = document.querySelector('.music-tree-interface');
+    const noteState = {};
+
     let rootFrequency = 166;
 
     const polySynth = new Tone.PolySynth(Tone.Synth, {
@@ -16,23 +19,62 @@ export function constructMusicTree() {
 
 
     noteConfig.forEach(note => {
-        console.log(note.note);
-    })
+        const button = document.createElement('button');
+        button.textContent = note.ratio;
+        button.dataset.ratio = note.ratio;
+        button.classList.add('music-note');
+        musicTree.appendChild(button);
+    });
+
+    function playNote(ratio) {
+        const frequency = ratio * rootFrequency;
+        polySynth.triggerAttack(frequency);
+    }
+
+    function stopNote(ratio) {
+        const frequency = ratio * rootFrequency;
+        polySynth.triggerRelease(frequency);
+    }
 
 
-    let keyMap = {
-        f: 1,
-        t: 1.5,
-        g: 1.25,
-        c: .666,
-        r: 1.2
-    }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Keep track of pressed keys
     let activeKeys = {};
 
     // Handle keydown and keyup for keyboard control
     document.addEventListener('keydown', (event) => {
+        const pressedKey = event.key.toLowerCase();
+        const note = noteConfig.find(n => n.key.toLowerCase() === pressedKey);
+
         let keyMultiplier = keyMap[event.key];
 
         // If the key is mapped and not already active
@@ -52,19 +94,5 @@ export function constructMusicTree() {
             activeKeys[event.key] = false;  // Mark the key as inactive
         }
     });
-
-
-
-
-
-
-
-
-    let musicTree = document.querySelector('.music-tree-interface');
-
-    console.log(musicTree);
-
-
-    
 }
   
