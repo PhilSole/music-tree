@@ -7,9 +7,14 @@ html, body {
     padding: 0;
 }
 
+.music-tree-wrap {
+    display: flex;
+    justify-content: center;
+}
+
 .music-tree {
     background-color: cyan;
-    transform-origin: top left;
+    transform-origin: top center;
     transform: scale(var(--scale-factor, 1));
     
     .music-note {
