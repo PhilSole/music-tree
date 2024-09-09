@@ -12,6 +12,9 @@
 - positioning is based on 3 directions, positive and negative. 5th, Maj 3rd, Min 3rd. Could be part of button config file.
 - Dividing by 5 is the largeest meaningful division
 
+## Interface
+- An octave switching button/gesture above/right of 2nd octave etc
+
 ## Tone.js notes
 - Some things to try to increase tone.js performance
 - Tone.getContext().latencyHint = 'fastest'; // Or 'balanced', 'playback'
