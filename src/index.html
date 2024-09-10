@@ -4,67 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatGPT with Tone.js</title>
-
+    
     <!-- Parcel will compile SCSS to CSS -->
     <link rel="stylesheet" href="./styles/main.scss"> 
 </head>
 <body>
-    <textarea id="user-input" placeholder="Type your prompt here..."></textarea>
-    <button id="submit-button">Send</button>
-    <div id="output"></div>
-
-    <a href="index1.html">Next version</a>
-
-    <button class="btn-enable-audio">Enable Audio</button>
-
-    <div class="music-tree-interface">
-        <button class="btn-note root done" data-note="1"><span class="ratio">1</span></button>
-
-        <button class="btn-note harmonic_1 done" data-note="1.5"><span class="ratio">1.5</span></button>
-        <button class="btn-note relation_1 done" data-note=".666"><span class="ratio">.666</span></button>
-
-        <button class="btn-note harmonic_2 done" data-note="1.25"><span class="ratio">1.25</span></button>
-        <button class="btn-note relation_4 done" data-note=".8"><span class="ratio">.8</span></button>  
-        
-        <button class="btn-note relation_5 done" data-note="1.2"><span class="ratio">1.2</span></button>
-        <button class="btn-note relation_2 done" data-note=".833"><span class="ratio">.833</span></button>
-
-        <button class="btn-note harmonic_3 done" data-note="2.25"><span class="ratio">2.25</span></button>
-        <button class="btn-note relation_3 done" data-note="1.875"><span class="ratio">1.875</span></button>
-        <button class="btn-note relation_6 done" data-note="1.8"><span class="ratio">1.8</span></button>
-
-        <button class="btn-note relation_6 done" data-note=".444"><span class="ratio">.444</span></button>
-        <button class="btn-note relation_7 done" data-note=".533"><span class="ratio">.533</span></button>
-        <button class="btn-note harmonic_3 done" data-note=".555"><span class="ratio">.555</span></button>
-
-        <button class="btn-note root done" data-note="2"><span class="ratio">2</span></button>
-        <button class="btn-note relation_1 done" data-note="1.333"><span class="ratio">1.333</span></button>
-        <button class="btn-note relation_4 done" data-note="1.6"><span class="ratio">1.6</span></button>
-        <button class="btn-note relation_2 done" data-note="1.666"><span class="ratio">1.666</span></button>
-
-        <button class="btn-note relation_6 done" data-note=".888"><span class="ratio">.888</span></button>
-        <button class="btn-note relation_8 done" data-note=".7"><span class="ratio">.7</span></button>
-        <button class="btn-note relation_7 done" data-note="1.067"><span class="ratio">1.067</span></button>
-
-        <button class="btn-note root done" data-note=".5"><span class="ratio">.5</span></button>
-        <button class="btn-note harmonic_1 done" data-note=".75"><span class="ratio">.75</span></button>
-        <button class="btn-note harmonic_2 done" data-note=".625"><span class="ratio">.625</span></button>
-        <button class="btn-note relation_5 done" data-note=".6"><span class="ratio">.6</span></button>
-
-        <button class="btn-note harmonic_3 done" data-note="1.125"><span class="ratio">1.125</span></button>
-        <button class="btn-note relation_3 done" data-note=".938"><span class="ratio">.938</span></button>    
-        <button class="btn-note relation_8 done" data-note="1.4"><span class="ratio">1.4</span></button>    
-
-        <!-- <button class="btn-note relation_5" data-note="1.167"><span class="ratio">1.167</span></button> -->
-        <!-- <button class="btn-note relation_7" data-note="1.042"><span class="ratio">1.042</span></button> -->
-        <!-- <button class="btn-note" data-note="1.563"><span class="ratio">1.5625</span></button> -->
-
-        <!-- Anomalies -->
-        <!-- <button class="btn-note relation_6 done" data-note="1.75"><span class="ratio">1.75</span></button> -->
-        
+    <div class="music-tree-wrap">
+        <div class="music-tree"></div>
     </div>
-
-    <!-- Parcel will bundle and transpile JS -->
-    <script type="module" src="./scripts/main.js"></script>
+    
+    <script type="module" src="./scripts/main.js"></script>    
 </body>
 </html>
