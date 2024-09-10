@@ -7,15 +7,15 @@ export function constructMusicTree() {
     const idealHeight = 1071;
 
     let musicTree = document.querySelector('.music-tree');
-    musicTree.style.width = idealWidth + 'px';
-    musicTree.style.height = idealHeight + 'px';
 
     function updateScale() {   
-        const scaleX = window.innerWidth / idealWidth;
+        const scaleX = document.documentElement.clientWidth / idealWidth;
         const scaleY = window.innerHeight / idealHeight;
-    
-        // Use the smaller of the two scales to ensure the entire interface fits
-        const scaleFactor = Math.min(scaleX, scaleY);
+
+        let scaleFactor = Math.min(scaleX, scaleY);
+
+        musicTree.style.width = idealWidth * scaleFactor + 'px';
+        musicTree.style.height = idealHeight * scaleFactor + 'px';    
         
         // Update the scale factor
         document.documentElement.style.setProperty('--scale-factor', scaleFactor);
@@ -54,20 +54,70 @@ export function constructMusicTree() {
 
 
 
+
+// ====================================================================================
+//  Interactivity and tone.js
+// ====================================================================================
+
     const noteState = {};
 
-    let rootFrequency = 166;
+    let rootFrequency = 83;
 
     const polySynth = new Tone.PolySynth(Tone.Synth, {
         envelope: {
-            attack: 0.01,  // Time it takes for the sound to reach its peak level
-            decay: 0.2,    // Time it takes for the sound to decay down to the sustain level
-            sustain: 0.5,  // Sustain level (0 to 1)
-            release: 2     // Time it takes for the sound to fade out after releasing the note
+            attack: 0.01,
+            decay: 0.2,
+            sustain: 0.5,
+            release: 2
         }
     }).toDestination();
 
+    let isMouseDownOrTouching  = false;
 
+    musicTree.addEventListener('mousedown', handleStart);
+    musicTree.addEventListener('touchstart', handleStart);
+
+    document.addEventListener('mouseup', function(event) {
+        isMouseDown = false;
+
+        console.log(isMouseDown);
+
+        if (event.target && event.target.classList.contains('music-note')) {
+            const ratio = event.target.dataset.ratio;
+            stopNote(ratio);
+        }
+    }); 
+    
+    musicTree.addEventListener('mouseenter', function(event) {
+        if (event.target && event.target.classList.contains('music-note') && isMouseDown) {
+            const ratio = event.target.dataset.ratio;
+            playNote(ratio);  // Play the note when entering a new button while the mouse is down
+        }
+    }, true);
+    
+    musicTree.addEventListener('mouseout', function(event) {
+        if (event.target && event.target.classList.contains('music-note')) {
+            const ratio = event.target.dataset.ratio;
+            stopNote(ratio); 
+        }
+    });  
+    
+    // Function to handle starting interaction (mousedown or touchstart)
+    function handleStart(event) {
+        isMouseDownOrTouching = true;
+    
+        if (event.target && event.target.classList.contains('music-note')) {
+            const ratio = event.target.dataset.ratio;
+            playNote(ratio); 
+        }
+    } 
+    
+    function handleEnd() {
+        if (isMouseDownOrTouching) {
+            isMouseDownOrTouching = false;  // Reset the flag
+            stopAllNotes();  // Stop all notes when interaction ends
+        }
+    }    
 
 
     function playNote(ratio) {
@@ -80,6 +130,9 @@ export function constructMusicTree() {
         polySynth.triggerRelease(frequency);
     }
 
+    function stopAllNotes() {
+        polySynth.releaseAll(); 
+    }    
 
 
 
@@ -111,32 +164,33 @@ export function constructMusicTree() {
 
 
 
-    // Keep track of pressed keys
-    let activeKeys = {};
 
-    // Handle keydown and keyup for keyboard control
-    document.addEventListener('keydown', (event) => {
-        const pressedKey = event.key.toLowerCase();
-        const note = noteConfig.find(n => n.key.toLowerCase() === pressedKey);
+    // // Keep track of pressed keys
+    // let activeKeys = {};
 
-        let keyMultiplier = keyMap[event.key];
+    // // Handle keydown and keyup for keyboard control
+    // document.addEventListener('keydown', (event) => {
+    //     const pressedKey = event.key.toLowerCase();
+    //     const note = noteConfig.find(n => n.key.toLowerCase() === pressedKey);
 
-        // If the key is mapped and not already active
-        if (keyMultiplier && !activeKeys[event.key]) {
-            activeKeys[event.key] = true;  // Mark the key as active
-            playSound(keyMultiplier * rootFrequency);
-        }
+    //     let keyMultiplier = keyMap[event.key];
 
-    });
+    //     // If the key is mapped and not already active
+    //     if (keyMultiplier && !activeKeys[event.key]) {
+    //         activeKeys[event.key] = true;  // Mark the key as active
+    //         playSound(keyMultiplier * rootFrequency);
+    //     }
 
-    document.addEventListener('keyup', (event) => {
-        let keyMultiplier = keyMap[event.key];
+    // });
 
-        // If the key is mapped and is active
-        if (keyMultiplier && activeKeys[event.key]) {
-            stopSound(keyMultiplier * rootFrequency);
-            activeKeys[event.key] = false;  // Mark the key as inactive
-        }
-    });
+    // document.addEventListener('keyup', (event) => {
+    //     let keyMultiplier = keyMap[event.key];
+
+    //     // If the key is mapped and is active
+    //     if (keyMultiplier && activeKeys[event.key]) {
+    //         stopSound(keyMultiplier * rootFrequency);
+    //         activeKeys[event.key] = false;  // Mark the key as inactive
+    //     }
+    // });
 }
   

@@ -14,6 +14,7 @@
 
 ## Interface
 - An octave switching button/gesture above/right of 2nd octave etc
+- Multi touch. Each touch handled individually
 
 ## Tone.js notes
 - Some things to try to increase tone.js performance

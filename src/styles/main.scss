@@ -13,9 +13,9 @@ html, body {
 }
 
 .music-tree {
-    background-color: cyan;
-    transform-origin: top center;
+    transform-origin: top left;
     transform: scale(var(--scale-factor, 1));
+    user-select: none;
     
     .music-note {
         position: absolute;
@@ -24,5 +24,11 @@ html, body {
         background-color: magenta;
         color: $color_text_button;
         transform: translate(-50%, -50%);
+        font-size: 1.125rem;
+        font-weight: 600;
+
+        &[data-ratio="1"] {
+            font-size: 2.25rem;
+        }
     }
 }
