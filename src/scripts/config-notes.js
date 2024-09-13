@@ -9,19 +9,19 @@ State: active, what else?
 
 const noteConfig = [
     // Root
-    { ratio: 1, key: 'd', position: [0,0,0] },
+    { ratio: 1, key: 'd', position: [0, 0, 0] },
 
     // 3:2 direction (vertical)
-    { ratio: 1.5, key: 'f', position: [0,1,0] }, 
-    { ratio: 0.666, key: 's', position: [0,-1,0] },
+    { ratio: 1.5, key: 'f', position: [0, 1, 0] }, 
+    { ratio: 0.666, key: 's', position: [0, -1, 0] },
      
     // 5:4 direction (lower left to upper right)
-    { ratio: 1.25, key: 'r', position: [0,0,1] },
-    { ratio: 0.8, key: 'x', position: [0,0,-1] },
+    { ratio: 1.25, key: 'r', position: [0, 0, 1] },
+    { ratio: 0.8, key: 'x', position: [0, 0, -1] },
 
     // 6:5 direction (lower right to upper left)
-    { ratio: 1.2, key: 'c', position: [1,0,0] },
-    { ratio: 0.833, key: 'e', position: [-1,0,0] },
+    { ratio: 1.2, key: 'c', position: [1, 0, 0] },
+    { ratio: 0.833, key: 'e', position: [-1, 0, 0] },
 
     // 1.5 origin
     { ratio: 2.25, key: 'g', position: [0, 2, 0] },
@@ -29,7 +29,7 @@ const noteConfig = [
     { ratio: 1.8, key: 'v', position: [1, 1, 0] },
 
     // 0.666 origin
-    { ratio: 0.444, key: 'a', position: [0, -2, 0] },
+    // { ratio: 0.444, key: 'a', position: [0, -2, 0] },
     { ratio: 0.533, key: 'z', position: [0, -1, -1] },
     { ratio: 0.555, key: 'w', position: [-1, -1, 0] },
 

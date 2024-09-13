@@ -1,10 +1,10 @@
 import * as Tone from 'tone';
-import noteConfig from './config-note.js';
+import noteConfig from './config-notes.js';
 
 export function constructMusicTree() {
 
-    const idealWidth = 1372; 
-    const idealHeight = 1071;
+    const idealWidth = 1372; // 1372 with .444 button
+    const idealHeight = 1100; // 1071 with .444 button
 
     let musicTree = document.querySelector('.music-tree');
 
@@ -27,7 +27,7 @@ export function constructMusicTree() {
     // Update the scale when the window is resized
     window.addEventListener('resize', updateScale);    
 
-    let treeCentre = [694, 490];
+    let treeCentre = [694, 660]; // [694, 490] with .444 button
     let triangleSide = 220;
     let longSide = Math.sin(1.0472) * triangleSide;
     let shortSide = Math.cos(1.0472) * triangleSide;
@@ -50,6 +50,24 @@ export function constructMusicTree() {
 
         button.classList.add('music-note');
         musicTree.appendChild(button);
+
+        const buttonChordMaj = document.createElement('button');
+        buttonChordMaj.dataset.ratio = note.ratio;
+        buttonChordMaj.dataset.quality = 'major';
+        buttonChordMaj.style.left = buttonX + 'px';
+        buttonChordMaj.style.top = buttonY + 'px';
+
+        buttonChordMaj.classList.add('music-chord');
+        musicTree.appendChild(buttonChordMaj);
+
+        const buttonChordMin = document.createElement('button');
+        buttonChordMin.dataset.ratio = note.ratio;
+        buttonChordMin.dataset.quality = 'minor';
+        buttonChordMin.style.left = buttonX + 'px';
+        buttonChordMin.style.top = buttonY + 'px';
+
+        buttonChordMin.classList.add('music-chord');
+        musicTree.appendChild(buttonChordMin);
     });
 
 
@@ -59,9 +77,9 @@ export function constructMusicTree() {
 //  Interactivity and tone.js
 // ====================================================================================
 
-    const noteState = {};
+    const noteState = {};   
 
-    let rootFrequency = 83;
+    let rootFrequency = 166;
 
     const polySynth = new Tone.PolySynth(Tone.Synth, {
         envelope: {
@@ -85,6 +103,23 @@ export function constructMusicTree() {
         if (event.target && event.target.classList.contains('music-note')) {
             const ratio = event.target.dataset.ratio;
             stopNote(ratio);
+        } else if (event.target && event.target.classList.contains('music-chord')) {
+            const ratio = event.target.dataset.ratio;
+            const quality = event.target.dataset.quality;
+
+            switch (quality) {
+                case 'major':
+                    stopNote(ratio * 1.25);
+                    break;
+                case 'minor':
+                    stopNote(ratio * 1.2);
+                    break;
+                default:
+                    break;
+            }
+             
+            stopNote(ratio);
+            stopNote(ratio * 1.5);
         }
     }); 
     
@@ -109,6 +144,23 @@ export function constructMusicTree() {
         if (event.target && event.target.classList.contains('music-note')) {
             const ratio = event.target.dataset.ratio;
             playNote(ratio); 
+        } else if (event.target && event.target.classList.contains('music-chord')) {
+            const ratio = event.target.dataset.ratio;
+            const quality = event.target.dataset.quality;
+
+            switch (quality) {
+                case 'major':
+                    playNote(ratio * 1.25);
+                    break;
+                case 'minor':
+                    playNote(ratio * 1.2);
+                    break;
+                default:
+                    break;
+            }
+             
+            playNote(ratio);
+            playNote(ratio * 1.5);
         }
     } 
     

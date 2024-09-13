@@ -14,7 +14,7 @@ html, body {
 
 .music-tree {
     transform-origin: top left;
-    transform: scale(var(--scale-factor, 1));
+    transform: scale(var(--scale-factor, 1)) skew(0deg, -3deg);
     user-select: none;
     
     .music-note {
@@ -23,12 +23,41 @@ html, body {
         border: none;
         background-color: magenta;
         color: $color_text_button;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) skew(0deg, 3deg);
         font-size: 1.125rem;
         font-weight: 600;
+        cursor: pointer;
+        transition: opacity .2s ease;
 
         &[data-ratio="1"] {
             font-size: 2.25rem;
+        }
+
+        &:hover {
+            opacity: .66;
+        }        
+    }
+
+    .music-chord {
+        position: absolute;
+        width: 221px;
+        height: 190.52px; /* Height based on the Pythagorean theorem for an equilateral triangle */
+        background-color: yellow;
+        border: none;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        cursor: pointer;
+        transform: translate(-28.1%, -120%) rotate(-30deg);
+        z-index: -1;  
+        opacity: .33;
+        transition: opacity .2s ease;
+        
+        &[data-quality="minor"] {
+            background-color: cyan;
+            transform: translate(-71.5%, -119.9%) rotate(30deg);
+        }
+
+        &:hover {
+            opacity: .15;
         }
     }
 }
