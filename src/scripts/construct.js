@@ -40,7 +40,7 @@ export function constructMusicTree() {
         const buttonScale = 1 / note.ratio * 100 + 'px';
         button.style.width = buttonScale;
         button.style.height = buttonScale;
-        button.style.lineHeight = buttonScale;
+        button.style.lineHeight = 1 / note.ratio * 90 + 'px';
 
         let buttonX = treeCentre[0] + note.position[2] * longSide - note.position[0] * longSide;
         let buttonY = treeCentre[1] - note.position[1] * triangleSide - note.position[2] * shortSide - note.position[0] * shortSide;
