@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 
     // LiveReload setup
     const liveReloadServer = livereload.createServer();
-    liveReloadServer.watch(path.join(__dirname, '../public/dist'));
+    liveReloadServer.watch(path.join(__dirname, '../dist'));
 
     // Inject the LiveReload script into the HTML served by Express
     app.use(connectLivereload.default());
@@ -42,8 +42,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 
 // Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../public/dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,

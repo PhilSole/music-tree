@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import noteConfig from './config-notes.js';
 
-export function constructMusicTree() {
+export function createMusicTree() {
 
     const idealWidth = 1372; // 1372 with .444 button
     const idealHeight = 1100; // 1071 with .444 button
