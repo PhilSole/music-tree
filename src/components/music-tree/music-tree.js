@@ -4,7 +4,7 @@ import noteConfig from './config-notes.js';
 export function createMusicTree() {
 
     const idealWidth = 1372; // 1372 with .444 button
-    const idealHeight = 1100; // 1071 with .444 button
+    const idealHeight = 1200; // 1071 with .444 button
 
     let musicTree = document.querySelector('.music-tree');
 
@@ -27,7 +27,7 @@ export function createMusicTree() {
     // Update the scale when the window is resized
     window.addEventListener('resize', updateScale);    
 
-    let treeCentre = [694, 660]; // [694, 490] with .444 button
+    let treeCentre = [694, 700]; // [694, 490] with .444 button
     let triangleSide = 220;
     let longSide = Math.sin(1.0472) * triangleSide;
     let shortSide = Math.cos(1.0472) * triangleSide;
@@ -76,14 +76,20 @@ export function createMusicTree() {
 // ====================================================================================
 //  Interactivity and tone.js
 // ====================================================================================
+Tone.getContext().lookAhead = .1;
+console.log(Tone.getContext());
 
     const noteState = {};   
 
     let rootFrequency = 166;
 
     const polySynth = new Tone.PolySynth(Tone.Synth, {
+        oscillator: {
+            type: "sine",
+            modulationType: "sine"
+        },
         envelope: {
-            attack: 0.01,
+            attack: 0.05,
             decay: 0.2,
             sustain: 0.5,
             release: 2
@@ -148,19 +154,30 @@ export function createMusicTree() {
             const ratio = event.target.dataset.ratio;
             const quality = event.target.dataset.quality;
 
+            const root = ratio * rootFrequency;
+            const perfectFifth = root * 1.5;
+            const majorThird = root * 1.25;
+
             switch (quality) {
                 case 'major':
-                    playNote(ratio * 1.25);
+                    // playNote(ratio * 1.25);
+
+                    // polySynth.triggerAttack(majorThird, Tone.now(), .3);
+                    polySynth.triggerAttack([root, perfectFifth, majorThird], Tone.now() + .1, 0.3);
+                    polySynth.triggerRelease([root, perfectFifth, majorThird],
+                        Tone.now() + 1);
                     break;
                 case 'minor':
-                    playNote(ratio * 1.2);
+                    // playNote(ratio * 1.2);
                     break;
                 default:
                     break;
             }
+
+        
              
-            playNote(ratio);
-            playNote(ratio * 1.5);
+            // playNote(ratio);
+            // playNote(ratio * 1.5);
         }
     } 
     
@@ -174,7 +191,7 @@ export function createMusicTree() {
 
     function playNote(ratio) {
         const frequency = ratio * rootFrequency;
-        polySynth.triggerAttack(frequency);
+        polySynth.triggerAttack(frequency, Tone.now() + .1, .4);
     }
 
     function stopNote(ratio) {

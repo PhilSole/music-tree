@@ -146,7 +146,7 @@ export function createMetronome(container) {
             startStopButton.textContent = 'Start Metronome'; // Change button text
         } else {
             // Start the metronome
-            Tone.getTransport().start();
+            Tone.getTransport().start("+0.1"); // "+0.1" helps performance?
             startStopButton.textContent = 'Stop Metronome'; // Change button text
         }
         metronomeRunning = !metronomeRunning; // Toggle the state
