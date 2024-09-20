@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import noteConfig from './config-notes.js';
+import './music-tree.scss';
 
 export function createMusicTree() {
 
@@ -71,13 +72,51 @@ export function createMusicTree() {
     });
 
 
+    const myPolySynth = new Tone.PolySynth(Tone.Synth, {
+        oscillator: {
+            type: "custom",
+            detune: 0,
+            phase: 0,
+            partials: [1, .125, .0625],
+            volume: -12
+        },
+        envelope: {
+            attack: 0.01,
+            decay: .1,
+            sustain: .75,
+            release: 1
+        }
+    }).toDestination();
+
+    const autoFilter = new Tone.AutoFilter("8n").toDestination()
+    const chorus = new Tone.Chorus(2.5, 3.5, .25).toDestination().start(); // frequency, delay (ms), depth
+    const dist = new Tone.Distortion(0.0125).toDestination();
+    // const pingPong = new Tone.PingPongDelay("4n", .66).toDestination();
+    // const reverb = new Tone.Reverb({
+    //     decay: 5,   // Set the decay time in seconds
+    //     preDelay: 0.6,  // Optional pre-delay time
+    //     wet: 1
+    // }).toDestination();
+    // const tremolo = new Tone.Tremolo(2, 1).toDestination().start();
+
+    myPolySynth.connect(chorus);
+    myPolySynth.connect(dist);
+    // myPolySynth.connect(pingPong);
+    // myPolySynth.connect(reverb);
+    // myPolySynth.connect(tremolo);
+
+    document.body.addEventListener('click', () => {
+        myPolySynth.triggerAttackRelease("200", 4, Tone.now(), .5);
+        myPolySynth.triggerAttackRelease("250", 4, Tone.now() + 1, .25);
+        myPolySynth.triggerAttackRelease("300", 4, Tone.now() + 2, .125);
+    });
 
 
-// ====================================================================================
-//  Interactivity and tone.js
-// ====================================================================================
-Tone.getContext().lookAhead = .1;
-console.log(Tone.getContext());
+
+    // ====================================================================================
+    //  Interactivity and tone.js
+    // ====================================================================================
+    Tone.getContext().lookAhead = .1; // kind of like a buffer. 0.1 is default
 
     const noteState = {};   
 
