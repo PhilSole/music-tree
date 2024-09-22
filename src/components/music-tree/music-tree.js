@@ -7,6 +7,7 @@ export function createMusicTree() {
     const idealWidth = 1372; // 1372 with .444 button
     const idealHeight = 1200; // 1071 with .444 button
 
+    let musicTreeWrap = document.querySelector('.music-tree-wrap');
     let musicTree = document.querySelector('.music-tree');
 
     function updateScale() {   
@@ -71,8 +72,10 @@ export function createMusicTree() {
         musicTree.appendChild(buttonChordMin);
     });
 
-
-    const myPolySynth = new Tone.PolySynth(Tone.Synth, {
+// ====================================================================
+//  BUILDING THE INSTRUMENT TONE
+// ====================================================================
+    const polySynth = new Tone.PolySynth(Tone.Synth, {
         oscillator: {
             type: "custom",
             detune: 0,
@@ -81,36 +84,59 @@ export function createMusicTree() {
             volume: -12
         },
         envelope: {
-            attack: 0.01,
+            attack: 0.1,
             decay: .1,
-            sustain: .75,
-            release: 1
+            sustain: 1,
+            release: 2
         }
     }).toDestination();
 
-    const autoFilter = new Tone.AutoFilter("8n").toDestination()
-    const chorus = new Tone.Chorus(2.5, 3.5, .25).toDestination().start(); // frequency, delay (ms), depth
+    const compressor = new Tone.Compressor({
+        threshold: -100,  // Level above which compression is applied
+        ratio: 10,        // Compression ratio (how much to reduce the peaks)
+        attack: 0.07,    // How quickly compression starts
+        release: 0.2     // How quickly compression stops after the peak
+    }).toDestination();    
+
+    const filter = new Tone.Filter({
+        frequency: 50,  // Start filtering above 2000 Hz
+        type: "lowpass",
+        rolloff: -12,     // Smoother transition with moderate rolloff
+        Q: 1              // Low resonance for a natural sound
+    }).toDestination();
+
+    const feedbackDelay = new Tone.FeedbackDelay({
+        delayTime: "1n",  // Delay time (eighth note)
+        feedback: 0.125,    // 50% feedback for multiple echoes
+        wet: 0.125          // Mix between dry and wet signal
+    }).toDestination();
+
+    const chorus = new Tone.Chorus(1, 1, .125).toDestination().start(); // frequency, delay (ms), depth
+    
     const dist = new Tone.Distortion(0.0125).toDestination();
-    // const pingPong = new Tone.PingPongDelay("4n", .66).toDestination();
-    // const reverb = new Tone.Reverb({
-    //     decay: 5,   // Set the decay time in seconds
-    //     preDelay: 0.6,  // Optional pre-delay time
-    //     wet: 1
-    // }).toDestination();
-    // const tremolo = new Tone.Tremolo(2, 1).toDestination().start();
+    
+    const pingPong = new Tone.PingPongDelay({
+        delayTime: "8n",
+        feedback: .75,
+        wet: .95
+    }).toDestination();
+    
+    const reverb = new Tone.Reverb({
+        decay: 6,       // Length of the reverb tail (in seconds)
+        preDelay: .2, // Short pre-delay for a natural feel
+        wet: 1        // Mix between dry and wet signal (0 to 1)
+    }).toDestination();
+    
+    const tremolo = new Tone.Tremolo(2, 1).toDestination().start();
 
-    myPolySynth.connect(chorus);
-    myPolySynth.connect(dist);
-    // myPolySynth.connect(pingPong);
-    // myPolySynth.connect(reverb);
-    // myPolySynth.connect(tremolo);
-
-    document.body.addEventListener('click', () => {
-        myPolySynth.triggerAttackRelease("200", 4, Tone.now(), .5);
-        myPolySynth.triggerAttackRelease("250", 4, Tone.now() + 1, .25);
-        myPolySynth.triggerAttackRelease("300", 4, Tone.now() + 2, .125);
-    });
-
+    // polySynth.connect(filter);
+    // polySynth.connect(chorus);
+    // polySynth.connect(dist);
+    // polySynth.connect(pingPong);
+    // polySynth.connect(reverb);
+    // polySynth.connect(tremolo);
+    // polySynth.connect(feedbackDelay);
+    // polySynth.connect(compressor);
 
 
     // ====================================================================================
@@ -122,152 +148,74 @@ export function createMusicTree() {
 
     let rootFrequency = 166;
 
-    const polySynth = new Tone.PolySynth(Tone.Synth, {
-        oscillator: {
-            type: "sine",
-            modulationType: "sine"
-        },
-        envelope: {
-            attack: 0.05,
-            decay: 0.2,
-            sustain: 0.5,
-            release: 2
-        }
-    }).toDestination();
-
     let isMouseDownOrTouching  = false;
-
-    musicTree.addEventListener('mousedown', handleStart);
-    musicTree.addEventListener('touchstart', handleStart);
-
-    document.addEventListener('mouseup', function(event) {
-        isMouseDown = false;
-
-        console.log(isMouseDown);
-
-        if (event.target && event.target.classList.contains('music-note')) {
-            const ratio = event.target.dataset.ratio;
-            stopNote(ratio);
-        } else if (event.target && event.target.classList.contains('music-chord')) {
-            const ratio = event.target.dataset.ratio;
-            const quality = event.target.dataset.quality;
-
-            switch (quality) {
-                case 'major':
-                    stopNote(ratio * 1.25);
-                    break;
-                case 'minor':
-                    stopNote(ratio * 1.2);
-                    break;
-                default:
-                    break;
-            }
-             
-            stopNote(ratio);
-            stopNote(ratio * 1.5);
-        }
-    }); 
     
-    musicTree.addEventListener('mouseenter', function(event) {
-        if (event.target && event.target.classList.contains('music-note') && isMouseDown) {
-            const ratio = event.target.dataset.ratio;
-            playNote(ratio);  // Play the note when entering a new button while the mouse is down
-        }
-    }, true);
-    
-    musicTree.addEventListener('mouseout', function(event) {
-        if (event.target && event.target.classList.contains('music-note')) {
-            const ratio = event.target.dataset.ratio;
-            stopNote(ratio); 
-        }
-    });  
-    
-    // Function to handle starting interaction (mousedown or touchstart)
+    musicTreeWrap.addEventListener('mousedown', handleStart);
+    musicTreeWrap.addEventListener('touchstart', handleStart);
+
     function handleStart(event) {
         isMouseDownOrTouching = true;
     
-        if (event.target && event.target.classList.contains('music-note')) {
+        if (event.target.classList.contains('music-note')) {
             const ratio = event.target.dataset.ratio;
-            playNote(ratio); 
-        } else if (event.target && event.target.classList.contains('music-chord')) {
+            const note = ratio * rootFrequency;
+
+            polySynth.triggerAttack(note, Tone.now());
+
+        } else if (event.target.classList.contains('music-chord')) {
             const ratio = event.target.dataset.ratio;
             const quality = event.target.dataset.quality;
 
             const root = ratio * rootFrequency;
             const perfectFifth = root * 1.5;
-            const majorThird = root * 1.25;
-
-            switch (quality) {
-                case 'major':
-                    // playNote(ratio * 1.25);
-
-                    // polySynth.triggerAttack(majorThird, Tone.now(), .3);
-                    polySynth.triggerAttack([root, perfectFifth, majorThird], Tone.now() + .1, 0.3);
-                    polySynth.triggerRelease([root, perfectFifth, majorThird],
-                        Tone.now() + 1);
-                    break;
-                case 'minor':
-                    // playNote(ratio * 1.2);
-                    break;
-                default:
-                    break;
+            let third = root * 1.25;
+            
+            if(quality == 'minor') {
+                third = root * 1.2;
             }
 
-        
-             
-            // playNote(ratio);
-            // playNote(ratio * 1.5);
+            polySynth.triggerAttack(root, Tone.now(), .5);
+            polySynth.triggerAttack(perfectFifth, Tone.now() + .001, .5);
+            polySynth.triggerAttack(third, Tone.now() + .002, .5);
         }
-    } 
+    }
     
-    function handleEnd() {
-        if (isMouseDownOrTouching) {
-            isMouseDownOrTouching = false;  // Reset the flag
-            stopAllNotes();  // Stop all notes when interaction ends
+    document.addEventListener('mouseup', function(event) {
+        isMouseDownOrTouching  = false;
+        polySynth.releaseAll();
+    }); 
+    
+    musicTreeWrap.addEventListener('mouseenter', function(event) {
+        if (isMouseDownOrTouching && event.target.classList.contains('music-note')) {
+            const ratio = event.target.dataset.ratio;
+            const note = ratio * rootFrequency;
+            polySynth.triggerAttack(note, Tone.now());
         }
-    }    
+    }, true);
+    
+    musicTreeWrap.addEventListener('mouseout', function(event) {
+        if (isMouseDownOrTouching && event.target.classList.contains('music-note')) {
+            const ratio = event.target.dataset.ratio;
+            const note = ratio * rootFrequency;
+            polySynth.triggerRelease(note);
 
+        } else if (isMouseDownOrTouching && event.target.classList.contains('music-chord')) {
+            const ratio = event.target.dataset.ratio;
+            const quality = event.target.dataset.quality;
 
-    function playNote(ratio) {
-        const frequency = ratio * rootFrequency;
-        polySynth.triggerAttack(frequency, Tone.now() + .1, .4);
-    }
+            const root = ratio * rootFrequency;
+            const perfectFifth = root * 1.5;
+            let third = root * 1.25;
+            
+            if(quality == 'minor') {
+                third = root * 1.2;
+            }
 
-    function stopNote(ratio) {
-        const frequency = ratio * rootFrequency;
-        polySynth.triggerRelease(frequency);
-    }
-
-    function stopAllNotes() {
-        polySynth.releaseAll(); 
-    }    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            polySynth.triggerRelease(root);
+            polySynth.triggerRelease(perfectFifth);
+            polySynth.triggerRelease(third);
+        }
+    });      
 
 
 

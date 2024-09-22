@@ -8,7 +8,7 @@ $color_background_button: magenta;
 
 .music-tree {
     transform-origin: top left;
-    transform: scale(var(--scale-factor, 1)) skew(0deg, -3deg);
+    transform: scale(var(--scale-factor, 1)) skew(0deg, -4.7deg);
     user-select: none;
     
     .music-note {
@@ -17,7 +17,7 @@ $color_background_button: magenta;
         border: none;
         background-color: magenta;
         color: $color_text_button;
-        transform: translate(-50%, -50%) skew(0deg, 3deg);
+        transform: translate(-50%, -50%) skew(0deg, 4.7deg);
         font-size: 1.125rem;
         font-weight: 600;
         cursor: pointer;

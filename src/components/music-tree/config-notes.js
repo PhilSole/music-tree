@@ -24,7 +24,7 @@ const noteConfig = [
     { ratio: 0.833, key: 'e', position: [-1, 0, 0] },
 
     // 1.5 origin
-    { ratio: 2.25, key: 'g', position: [0, 2, 0] },
+    // { ratio: 2.25, key: 'g', position: [0, 2, 0] },
     { ratio: 1.875, key: 't', position: [0, 1, 1] },
     { ratio: 1.8, key: 'v', position: [1, 1, 0] },
 
