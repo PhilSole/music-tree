@@ -87,7 +87,7 @@ export function createMusicTree() {
             attack: 0.1,
             decay: .1,
             sustain: 1,
-            release: 2
+            release: 4
         }
     }).toDestination();
 
@@ -129,14 +129,17 @@ export function createMusicTree() {
     
     const tremolo = new Tone.Tremolo(2, 1).toDestination().start();
 
+    const pitchShift = new Tone.PitchShift().toDestination();
+
     // polySynth.connect(filter);
-    // polySynth.connect(chorus);
+    polySynth.connect(chorus);
     // polySynth.connect(dist);
-    // polySynth.connect(pingPong);
+    polySynth.connect(pingPong);
     // polySynth.connect(reverb);
     // polySynth.connect(tremolo);
     // polySynth.connect(feedbackDelay);
     // polySynth.connect(compressor);
+    polySynth.connect(pitchShift);
 
 
     // ====================================================================================
@@ -144,9 +147,31 @@ export function createMusicTree() {
     // ====================================================================================
     Tone.getContext().lookAhead = .1; // kind of like a buffer. 0.1 is default
 
-    const noteState = {};   
+    const activeNotes = new Map();  // To track active notes
 
     let rootFrequency = 166;
+    let rootFreqRange = document.getElementById('rootFrequencyRange');
+    let rootFreqDisplay = document.getElementById('frequencyValue');
+
+    rootFreqRange.addEventListener('input', function(event) {
+        rootFrequency = parseFloat(event.target.value);
+
+        updateFreqDisplay();
+        updateNotes();  
+    });
+
+    function updateFreqDisplay() {
+        rootFreqDisplay.innerText = `${rootFrequency} Hz`;
+    }
+    
+    function updateNotes() {
+        // Loop through the notes and update their frequencies based on the new rootFrequency
+        buttons.forEach(button => {
+            const ratio = button.dataset.ratio;
+            const newFrequency = rootFrequency * ratio;
+            // Update note's frequency or sound
+        });
+    }    
 
     let isMouseDownOrTouching  = false;
     
@@ -160,7 +185,7 @@ export function createMusicTree() {
             const ratio = event.target.dataset.ratio;
             const note = ratio * rootFrequency;
 
-            polySynth.triggerAttack(note, Tone.now());
+            playNote(note, event.target)
 
         } else if (event.target.classList.contains('music-chord')) {
             const ratio = event.target.dataset.ratio;
@@ -175,10 +200,19 @@ export function createMusicTree() {
             }
 
             polySynth.triggerAttack(root, Tone.now(), .5);
-            polySynth.triggerAttack(perfectFifth, Tone.now() + .001, .5);
-            polySynth.triggerAttack(third, Tone.now() + .002, .5);
+            polySynth.triggerAttack(perfectFifth, Tone.now() + .002, .475);
+            polySynth.triggerAttack(third, Tone.now() + .003, .465);
         }
     }
+
+    function playNote(note, button, time = Tone.now(), velocity = 1) {
+        
+        // Trigger the note with specified frequency, velocity, and time
+        polySynth.triggerAttack(note, time, velocity);
+        
+        button.classList.add('active');  // Add active class for styling
+        activeNotes.set(button, frequency);  // Track the button and its frequency
+    }    
     
     document.addEventListener('mouseup', function(event) {
         isMouseDownOrTouching  = false;

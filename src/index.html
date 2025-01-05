@@ -16,6 +16,12 @@
             <div class="music-tree"></div>
         </div>
 
+        <div class="root-frequency-setter">
+            <label for="rootFrequencyRange">Frequency (Hz): </label>
+            <input type="range" id="rootFrequencyRange" min="40" max="664" step="1" value="166">
+            <span id="frequencyValue">166 Hz</span> 
+        </div>
+
         <!-- Component - Visualisers -->
         <button id="playButton" class="run">Run</button>
         <canvas id="waveformCanvas" width="600" height="200"></canvas>
